@@ -13,7 +13,7 @@
 			$("#start").on("click", app.start);
 			$("#stop").on("click", app.stop);
 			$("#pause").on("click", app.pause);
-			$("#btnInputUser").on("click", app.inputUser);
+			$("#inputUser").on("input", app.inputUser);
 			$("#reset").on("click", app.reset);
 		},
 
@@ -41,8 +41,24 @@
 		timeDisplay : function() {
 			var minutes = Math.floor(app.time / 60);
 			var seconds = Math.floor(app.time % 60);
-			$("#minutes").html(minutes);
-			$("#seconds").html(seconds);
+			app.timeDisplayMinutes(minutes);
+			app.timeDisplaySeconds(seconds);
+		},
+
+		timeDisplayMinutes : function(min) {
+			if (min > 9) {
+				$("#minutes").html(min)
+			} else {
+				$("#minutes").html("0" + min)
+			}
+		},
+
+		timeDisplaySeconds : function(sec) {
+			if (sec > 9) {
+				$("#seconds").html(sec);
+			} else {
+				$("#seconds").html("0" + sec);
+			}
 		},
 
 		pause : function() {
@@ -58,13 +74,11 @@
 		},
 
 		reset : function() {
-			app.time = 0;
+			app.time = $("#inputUser").val();
 			app.timeDisplay();
+			clearInterval(app.intervalID);
 			app.intervalID = null;
-
 		}
-
-
 
 	}
 
