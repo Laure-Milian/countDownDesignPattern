@@ -3,23 +3,22 @@
 
 		time : null,
 		intervalID: null,
-		countClickPause: null,
 		
 		init : function() {
 			app.listeners();
 		},
 
 		listeners : function() {
-			$("#start").on("click", app.start);
-			$("#stop").on("click", app.stop);
-			$("#pause").on("click", app.pause);
+			$("#btnstart").on("click", app.start);
+			$("#btnstop").on("click", app.stop);
+			$("#btnpause").on("click", app.pause);
+			$("#btnreset").on("click", app.reset);
 			$("#inputUser").on("input", app.inputUser);
-			$("#reset").on("click", app.reset);
 		},
 
 		inputUser : function() {
 			app.time = $("#inputUser").val();
-			app.timeDisplay();
+			app.timeSeparation();
 		},
 
 		start : function() {
@@ -27,7 +26,7 @@
 				app.intervalID = setInterval(function() {
 					if (app.time > 0) {
 						app.time--;
-						app.timeDisplay();
+						app.timeSeparation();
 					}
 				}, 1000);
 			}
@@ -38,46 +37,35 @@
 			app.intervalID = null;
 		},
 
-		timeDisplay : function() {
+		timeSeparation : function() {
 			var minutes = Math.floor(app.time / 60);
 			var seconds = Math.floor(app.time % 60);
-			app.timeDisplayMinutes(minutes);
-			app.timeDisplaySeconds(seconds);
+			app.timeDisplay(minutes, "#minutes");
+			app.timeDisplay(seconds, "#seconds");
 		},
 
-		timeDisplayMinutes : function(min) {
-			if (min > 9) {
-				$("#minutes").html(min)
+		timeDisplay : function(timeElement, selector) {
+			if (timeElement > 9) {
+				$(selector).html(timeElement)
 			} else {
-				$("#minutes").html("0" + min)
-			}
-		},
-
-		timeDisplaySeconds : function(sec) {
-			if (sec > 9) {
-				$("#seconds").html(sec);
-			} else {
-				$("#seconds").html("0" + sec);
+				$(selector).html("0" + timeElement)
 			}
 		},
 
 		pause : function() {
-			app.countClickPause++;
-			if (app.countClickPause % 2 === 1) {
-				clearInterval(app.intervalID);
-				app.intervalID = null;
-				$("#pause").html("Play ");		
+			if (app.intervalID !== null) {
+				app.stop();
+				$("#btnpause").html("Play ");		
 			} else {
 				app.start();
-				$("#pause").html("Pause");
+				$("#btnpause").html("Pause");
 			}
 		},
 
 		reset : function() {
 			app.time = $("#inputUser").val();
-			app.timeDisplay();
-			clearInterval(app.intervalID);
-			app.intervalID = null;
+			app.timeSeparation();
+			app.stop();
 		}
 
 	}
