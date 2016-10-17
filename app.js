@@ -23,16 +23,19 @@
 		},
 
 		start : function() {
-			intervalID = setInterval(function() {
-				if (app.time > 0) {
-					app.time--;
-					app.timeDisplay();
-				}
-			}, 1000);
+			if (app.intervalID === null) {
+				app.intervalID = setInterval(function() {
+					if (app.time > 0) {
+						app.time--;
+						app.timeDisplay();
+					}
+				}, 1000);
+			}
 		},
 
 		stop : function() {
-			clearInterval(intervalID);
+			clearInterval(app.intervalID);
+			app.intervalID = null;
 		},
 
 		timeDisplay : function() {
@@ -45,7 +48,8 @@
 		pause : function() {
 			app.countClickPause++;
 			if (app.countClickPause % 2 === 1) {
-				clearInterval(intervalID);
+				clearInterval(app.intervalID);
+				app.intervalID = null;
 				$("#pause").html("Play ");		
 			} else {
 				app.start();
@@ -56,6 +60,8 @@
 		reset : function() {
 			app.time = 0;
 			app.timeDisplay();
+			app.intervalID = null;
+
 		}
 
 
