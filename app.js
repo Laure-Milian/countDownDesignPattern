@@ -3,8 +3,8 @@
 
 		time : null,
 		intervalID: null,
-		default: 1500,
-		timeMax: 1500,
+		default: 6,
+		timeMax: 6,
 		
 		init : function() {
 			app.listeners();
@@ -33,18 +33,13 @@
 					if (app.time > 0) {
 						app.time--;
 						app.timeSeparation();
-						app.displayProgressBar();
+					} else {
+						app.videoLaunch();
 					}
 				}, 1000);
 			}
 		},
 
-		displayProgressBar : function() {
-			console.log(app.timeMax);
-			var progressPercent = Math.floor(100 - ((app.time / app.timeMax) * 100));
-			$("#progress").css("width", progressPercent + "%");
-			console.log(progressPercent);
-		},
 
 		stop : function() {
 			clearInterval(app.intervalID);
@@ -56,6 +51,7 @@
 			var seconds = Math.floor(app.time % 60);
 			app.timeDisplay(minutes, "#minutes");
 			app.timeDisplay(seconds, "#seconds");
+			app.displayProgressBar();
 		},
 
 		timeDisplay : function(timeElement, selector) {
@@ -64,6 +60,11 @@
 			} else {
 				$(selector).html("0" + timeElement)
 			}
+		},
+
+		displayProgressBar : function() {
+			var progressPercent = Math.floor(100 - ((app.time / app.timeMax) * 100));
+			$("#progress").css("width", progressPercent + "%");
 		},
 
 		pause : function() {
@@ -80,6 +81,11 @@
 			app.time = $("#inputUser").val();
 			app.timeSeparation();
 			app.stop();
+		},
+
+		videoLaunch : function() {
+			app.stop();
+			$("#video").html('<iframe width="560" height="315" src="https://www.youtube.com/embed/7jWYUtQZhK0?autoplay=1" frameborder="0" allowfullscreen></iframe>');
 		}
 
 	}
