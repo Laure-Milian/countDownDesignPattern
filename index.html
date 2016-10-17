@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="semantic/semantic.css">
+</head>
+<body>
+
+	<div class="ui centered grid">
+
+		<div class="row">
+			<h1>Countdown</h1>
+		</div>
+
+		<div id="time" class="row">
+			<span id="minutes">00</span> : <span id="seconds">00</span>
+		</div>
+
+		<div class="row">
+			<input id="inputUser" type="number">
+			<button id="btnInputUser" class="ui teal button">Input</button>
+		</div>
+
+		<div class="row">
+			<button id="start" class="ui green button">Start</button>
+			<button id="stop" class="ui red button">Stop</button>
+			<button id="pause" class="ui orange button">Pause</button>
+			<button id="reset" class="ui purple button">Reset</button>
+		</div>
+		
+	</div>
+
+
+	<script src=node_modules/jquery/dist/jquery.js></script>
+	<script src=app.js></script>
+	
+</body>
+</html>
