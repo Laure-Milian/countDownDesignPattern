@@ -6,3 +6,15 @@
 #time {
 	font-size: 60px;
 }
+
+#progress {
+	background-color: red;
+	width: 0%;
+	height: 20px;
+}
+
+#bar {
+	background-color: grey;
+	width: 200px;
+	height: 20px;
+}

@@ -3,9 +3,13 @@
 
 		time : null,
 		intervalID: null,
+		default: 1500,
+		timeMax: 1500,
 		
 		init : function() {
 			app.listeners();
+			app.time = app.default;
+			app.timeSeparation();
 		},
 
 		listeners : function() {
@@ -17,8 +21,10 @@
 		},
 
 		inputUser : function() {
-			app.time = $("#inputUser").val();
-			app.timeSeparation();
+			app.time = app.timeMax = $("#inputUser").val();
+			if (app.time >= 0) {
+				app.timeSeparation();
+			}
 		},
 
 		start : function() {
@@ -27,9 +33,17 @@
 					if (app.time > 0) {
 						app.time--;
 						app.timeSeparation();
+						app.displayProgressBar();
 					}
 				}, 1000);
 			}
+		},
+
+		displayProgressBar : function() {
+			console.log(app.timeMax);
+			var progressPercent = Math.floor(100 - ((app.time / app.timeMax) * 100));
+			$("#progress").css("width", progressPercent + "%");
+			console.log(progressPercent);
 		},
 
 		stop : function() {
